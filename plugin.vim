@@ -29,6 +29,8 @@ call plug#begin('~/.config/nvim/plugged')
 	Plug 'vim-scripts/c.vim' "IDE
 	Plug 'ludovicchabant/vim-gutentags' " Ctags
 
+	""" vim-go
+	Plug 'fatih/vim-go', { 'do' : ':GoInstallBinaries' }  
     call plug#end()
 "}}}
 " Plugins Configuration {{{
@@ -38,5 +40,25 @@ call plug#begin('~/.config/nvim/plugged')
 	" Deoplete
 	let g:deoplete#enable_at_startup = 1
 
-	" Online thesaurus
+	" Use tab in autocomplete
+	inoremap <silent><expr> <TAB>
+				\ pumvisible() ? "\<C-n>" :
+				\ <SID>check_back_space() ? "\<TAB>" :
+				\ deoplete#mappings#manual_complete()
+	function! s:check_back_space() abort "{{{
+		let col = col('.') - 1
+		return !col || getline('.')[col - 1]  =~ '\s'
+	endfunction"}}}
+
+	let g:go_disable_autoinstall = 0
+
+	" Highlight
+	let g:go_highlight_functions = 1  
+	let g:go_highlight_methods = 1  
+	let g:go_highlight_structs = 1  
+	let g:go_highlight_operators = 1  
+
+	" close preview when leaving insert mode
+	autocmd InsertLeave * if pumvisible() == 0 | pclose | endif
+	
 " vim:foldmethod=marker:foldlevel=0
