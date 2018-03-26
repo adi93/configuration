@@ -132,4 +132,6 @@
 	" }}}
 " Autocommands {{{
 	autocmd FileType cpp set keywordprg=:term\ cppman
+	autocmd FileType go nnoremap <buffer> <C-b> :GoDef<CR>
+	autocmd FileType go nnoremap <buffer> <F3> :GoDoc<CR>
 " }}} vim:foldmethod=marker:foldlevel=0
