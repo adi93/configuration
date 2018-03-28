@@ -32,7 +32,9 @@
 	hi MatchParen term=reverse ctermbg=1 guibg=DarkCyan
 "}}}
 " Mapleader {{{
-	let mapleader=",,"
+	nnoremap <SPACE> <Nop>
+	let mapleader="\<SPACE>"
+	let maplocalleader="\<SPACE>"
 "}}}
 " Normal Mode mappings {{{
 	nnoremap j gj
@@ -55,17 +57,15 @@
 	nnoremap <F5> :%!python -m json.tool<CR> 
 	nnoremap <F4> :%!xmllint --format -<CR> 
 	nnoremap <C-[> <C-t>
-	nnoremap <F3> i<CR><ESC>i-<ESC>44.A<CR><C-R>=strftime("%c")<CR><ESC>kyyjpoTITLE:
 
-	" Annoying remaps
-	nnoremap Q q
-	nnoremap W w
+	nnoremap <leader><leader>a za
+	nnoremap <leader>w :
+	nnoremap <leader>q :q<CR>
 
 " }}}
 " Folding {{{
 	set foldenable
 	set foldlevelstart=10
-	nnoremap <space> za
 	set foldmethod=indent
 
 " }}}
@@ -132,6 +132,16 @@
 	" }}}
 " Autocommands {{{
 	autocmd FileType cpp set keywordprg=:term\ cppman
-	autocmd FileType go nnoremap <buffer> <C-b> :GoDef<CR>
-	autocmd FileType go nnoremap <buffer> <F3> :GoDoc<CR>
+	augroup filetype_go
+		autocmd FileType go nnoremap <buffer> <localleader>d :GoDef<CR>
+		autocmd FileType go nnoremap <buffer> <localleader>b :GoDoc<CR>
+		autocmd FileType go nnoremap <buffer> <localleader>o <C-o>
+		autocmd FileType go nnoremap <buffer> <localleader>i <C-i>
+	augroup END
+	augroup filetype_dia
+		autocmd BufRead,BufNewFile *.dia nnoremap <buffer> <F3> i<CR><ESC>i-<ESC>44.A<CR><C-R>=strftime("%c")<CR><ESC>kyyjpoTITLE:
+		autocmd BufRead,BufNewFile *.dia set nobackup
+		autocmd BufRead,BufNewFile *.dia set noswapfile
+		autocmd BufRead,BufNewFile *.dia set nowritebackup
+	augroup END
 " }}} vim:foldmethod=marker:foldlevel=0
