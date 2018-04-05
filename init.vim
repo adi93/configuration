@@ -139,7 +139,7 @@
 		autocmd FileType go nnoremap <buffer> <localleader>i <C-i>
 	augroup END
 	augroup filetype_dia
-		autocmd BufRead,BufNewFile *.dia nnoremap <buffer> <F3> i<CR><ESC>i-<ESC>44.A<CR><C-R>=strftime("%c")<CR><ESC>kyyjpoTITLE:
+		autocmd BufRead,BufNewFile *.dia nnoremap <buffer> <F3> i<CR><ESC>i-<ESC>44.A<CR><C-R>=strftime("%a %d %b %Y %r %Z")<CR><ESC>kyyjpoTITLE:
 		autocmd BufRead,BufNewFile *.dia set nobackup
 		autocmd BufRead,BufNewFile *.dia set noswapfile
 		autocmd BufRead,BufNewFile *.dia set nowritebackup
