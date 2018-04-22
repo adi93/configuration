@@ -2,3 +2,5 @@ autoload/*
 plugged/*
 tags
 spell/*
+plugin/
+templates/
