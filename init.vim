@@ -94,6 +94,10 @@ function! DecryptFilePre()
 	set nowritebackup
 	set nobackup
 	set bin
+	set spell
+	set scrolloff=16
+	let g:deoplete#disable_auto_complete=1
+	nnoremap <buffer> <F3> i<CR><ESC>i-<ESC>44.A<CR><C-R>=strftime("%c")<CR><ESC>kyyjpoTITLE:
 endfunction
 function! DecryptFilePost()
 	:%!gpg -d 2>/dev/null
@@ -130,21 +134,11 @@ augroup filetype_go
 	autocmd FileType go set foldlevel=2
 	autocmd FileType go nnoremap <buffer> <F3> :GoRun<CR>
 augroup END
-augroup filetype_dia
-	au!
-	autocmd BufRead,BufNewFile *.dia nnoremap <buffer> <F3> i<CR><ESC>i-<ESC>44.A<CR><C-R>=strftime("%c")<CR><ESC>kyyjpoTITLE:
-	autocmd BufRead,BufNewFile *.dia set nobackup
-	autocmd BufRead,BufNewFile *.dia set spell
-	autocmd BufRead,BufNewFile *.dia set noswapfile
-	autocmd BufRead,BufNewFile *.dia set nowritebackup
-	autocmd BufRead,BufNewFile *.dia set scrolloff=16
-	autocmd BufRead,BufNewFile *.dia :normal execute"let g:deoplete#disable_auto_complete=1"<CR>
-augroup END
-augroup encrypted
+augroup encrypted_dia
 	autocmd!
-	autocmd FileReadPre,BufReadPre *.gpg call DecryptFilePre()
-	autocmd FileReadPost,BufReadPost *.gpg call DecryptFilePost()
-	autocmd FileWritePre,BufWritePre *.gpg call EncryptFilePre()
-	autocmd FileWritePost,BufWritePost *.gpg call EncryptFilePost()
+	autocmd FileReadPre,BufReadPre *.dia.gpg call DecryptFilePre()
+	autocmd FileReadPost,BufReadPost *.dia.gpg call DecryptFilePost()
+	autocmd FileWritePre,BufWritePre *.dia.gpg call EncryptFilePre()
+	autocmd FileWritePost,BufWritePost *.dia.gpg call EncryptFilePost()
 augroup end
 " }}} vim:foldmethod=marker:foldlevel=0
