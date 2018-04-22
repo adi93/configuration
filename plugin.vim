@@ -26,11 +26,23 @@ call plug#begin('~/.config/nvim/plugged')
 	Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' } "Autocomplete
 	
 	""" C plugins
-	Plug 'vim-scripts/c.vim' "IDE
-	Plug 'ludovicchabant/vim-gutentags' " Ctags
+	" Plug 'vim-scripts/c.vim' "IDE
+	" Plug 'ludovicchabant/vim-gutentags' " Ctags
 
 	""" vim-go
 	Plug 'fatih/vim-go', { 'do' : ':GoInstallBinaries' }  
+
+	""" fuzzy find files
+	Plug 'ctrlpvim/ctrlp.vim'
+
+	""" csv files
+	Plug 'chrisbra/csv.vim'
+
+	""" Markdown
+	Plug 'kurocode25/mdforvim/'
+
+	""" Snippeets
+	Plug 'SirVer/ultisnips'
     call plug#end()
 "}}}
 " Plugins Configuration {{{
