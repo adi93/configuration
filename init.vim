@@ -7,6 +7,75 @@ set pastetoggle=<F3>
 set scrolloff=10
 syntax enable
 " }}}
+" Functions {{{
+function! StripTrailingWhitespaces()
+	" save last search & cursor position
+	let _s=@/
+	let l = line(".")
+	let c = col(".")
+	%s/\s\+$//e
+	let @/=_s
+	call cursor(l, c)
+endfunction
+
+nnoremap <leader>s :call StripTrailingWhitespaces()<CR>
+
+function! DecryptFilePre()
+	set viminfo=
+	set noswapfile
+	set nowritebackup
+	set nobackup
+	set bin
+	set spell
+	set scrolloff=16
+	let g:deoplete#disable_auto_complete=1
+	nnoremap <buffer> <F3> i<CR><ESC>i-<ESC>44.A<CR><C-R>=strftime("%c")<CR><ESC>kyyjpoTITLE:
+	inoremap *shrug* ¯\_ツ_/¯
+endfunction
+
+function! DecryptFilePost()
+	:%!gpg -d 2>/dev/null
+	set nobin
+endfunction
+
+function! EncryptFilePre()
+	set bin
+	:%!gpg --symmetric --cipher-algo AES256 2>/dev/null
+endfunction
+
+function! EncryptFilePost()
+	silent u
+	set nobin
+endfunction
+
+function! BufSel(pattern)
+	let bufcount = bufnr("$")
+	let currbufnr = 1
+	let nummatches = 0
+	let firstmatchingbufnr = 0
+	while currbufnr <= bufcount
+		if(bufexists(currbufnr))
+			let currbufname = bufname(currbufnr)
+			if(match(currbufname, a:pattern) > -1)
+				echo currbufnr . ": ". bufname(currbufnr)
+				let nummatches += 1
+				let firstmatchingbufnr = currbufnr
+			endif
+		endif
+		let currbufnr = currbufnr + 1
+	endwhile
+	if(nummatches == 1)
+		execute ":buffer ". firstmatchingbufnr
+	elseif(nummatches > 1)
+		let desiredbufnr = input("Enter buffer number: ")
+		if(strlen(desiredbufnr) != 0)
+			execute ":buffer ". desiredbufnr
+		endif
+	else
+		echo "No matching buffers"
+	endif
+endfunction
+" }}}
 " Spaces and tabs {{{
 set tabstop=4
 set softtabstop=4
@@ -58,9 +127,9 @@ nnoremap <F5> :%!python -m json.tool<CR>
 nnoremap <F4> :%!xmllint --format -<CR> 
 nnoremap <C-[> <C-t>
 
-nnoremap <leader><leader>a za
-nnoremap <leader>w :
-nnoremap <leader>q :q<CR>
+" enter key to insert new line in normal mode
+nnoremap <CR> o<ESC>
+
 nnoremap <leader>n :bNext<CR>
 nnoremap <leader>m :bprevious<CR>
 
@@ -75,74 +144,6 @@ set foldmethod=indent
 inoremap jk <ESC>
 inoremap <F2> ------------------------<C-M><C-R>=strftime('%c')<C-M><C-M>------------------------<C-M>
 
-" }}}
-" Functions {{{
-function! StripTrailingWhitespaces()
-	" save last search & cursor position
-	let _s=@/
-	let l = line(".")
-	let c = col(".")
-	%s/\s\+$//e
-	let @/=_s
-	call cursor(l, c)
-endfunction
-
-nnoremap <leader>s :call StripTrailingWhitespaces()<CR>
-
-function! DecryptFilePre()
-	set viminfo=
-	set noswapfile
-	set nowritebackup
-	set nobackup
-	set bin
-	set spell
-	set scrolloff=16
-	let g:deoplete#disable_auto_complete=1
-	nnoremap <buffer> <F3> i<CR><ESC>i-<ESC>44.A<CR><C-R>=strftime("%c")<CR><ESC>kyyjpoTITLE:
-endfunction
-
-function! DecryptFilePost()
-	:%!gpg -d 2>/dev/null
-	set nobin
-endfunction
-
-function! EncryptFilePre()
-	set bin
-	:%!gpg --symmetric --cipher-algo AES256 2>/dev/null
-endfunction
-
-function! EncryptFilePost()
-	silent u
-	set nobin
-endfunction
-
-function! BufSel(pattern)
-	let bufcount = bufnr("$")
-	let currbufnr = 1
-	let nummatches = 0
-	let firstmatchingbufnr = 0
-	while currbufnr <= bufcount
-		if(bufexists(currbufnr))
-			let currbufname = bufname(currbufnr)
-			if(match(currbufname, a:pattern) > -1)
-				echo currbufnr . ": ". bufname(currbufnr)
-				let nummatches += 1
-				let firstmatchingbufnr = currbufnr
-			endif
-		endif
-		let currbufnr = currbufnr + 1
-	endwhile
-	if(nummatches == 1)
-		execute ":buffer ". firstmatchingbufnr
-	elseif(nummatches > 1)
-		let desiredbufnr = input("Enter buffer number: ")
-		if(strlen(desiredbufnr) != 0)
-			execute ":buffer ". desiredbufnr
-		endif
-	else
-		echo "No matching buffers"
-	endif
-endfunction
 " }}}
 " Plugins{{{
 source ~/.config/nvim/plugin.vim
