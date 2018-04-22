@@ -86,6 +86,7 @@ function! StripTrailingWhitespaces()
 	let @/=_s
 	call cursor(l, c)
 endfunction
+
 nnoremap <leader>s :call StripTrailingWhitespaces()<CR>
 
 function! DecryptFilePre()
@@ -99,20 +100,49 @@ function! DecryptFilePre()
 	let g:deoplete#disable_auto_complete=1
 	nnoremap <buffer> <F3> i<CR><ESC>i-<ESC>44.A<CR><C-R>=strftime("%c")<CR><ESC>kyyjpoTITLE:
 endfunction
+
 function! DecryptFilePost()
 	:%!gpg -d 2>/dev/null
 	set nobin
 endfunction
+
 function! EncryptFilePre()
 	set bin
 	:%!gpg --symmetric --cipher-algo AES256 2>/dev/null
 endfunction
+
 function! EncryptFilePost()
 	silent u
 	set nobin
 endfunction
 
-
+function! BufSel(pattern)
+	let bufcount = bufnr("$")
+	let currbufnr = 1
+	let nummatches = 0
+	let firstmatchingbufnr = 0
+	while currbufnr <= bufcount
+		if(bufexists(currbufnr))
+			let currbufname = bufname(currbufnr)
+			if(match(currbufname, a:pattern) > -1)
+				echo currbufnr . ": ". bufname(currbufnr)
+				let nummatches += 1
+				let firstmatchingbufnr = currbufnr
+			endif
+		endif
+		let currbufnr = currbufnr + 1
+	endwhile
+	if(nummatches == 1)
+		execute ":buffer ". firstmatchingbufnr
+	elseif(nummatches > 1)
+		let desiredbufnr = input("Enter buffer number: ")
+		if(strlen(desiredbufnr) != 0)
+			execute ":buffer ". desiredbufnr
+		endif
+	else
+		echo "No matching buffers"
+	endif
+endfunction
 " }}}
 " Plugins{{{
 source ~/.config/nvim/plugin.vim
@@ -127,6 +157,7 @@ autocmd FileType cpp set keywordprg=:term\ cppman
 augroup filetype_go
 	au!
 	let g:go_term_mode = "10split"
+	autocmd FileType go nnoremap <buffer> <F3> :GoRun<CR>
 	autocmd FileType go nnoremap <buffer> <localleader>d :GoDef<CR>
 	autocmd FileType go nnoremap <buffer> <localleader>b :GoDoc<CR>
 	autocmd FileType go nnoremap <buffer> <localleader>o <C-o>

@@ -41,8 +41,9 @@ call plug#begin('~/.config/nvim/plugged')
 	""" Markdown
 	Plug 'kurocode25/mdforvim/'
 
-	""" Snippeets
+	""" ultisnips
 	Plug 'SirVer/ultisnips'
+
     call plug#end()
 "}}}
 " Plugins Configuration {{{
