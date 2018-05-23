@@ -29,7 +29,7 @@ function! DecryptFilePre()
 	set spell
 	set scrolloff=16
 	let g:deoplete#disable_auto_complete=1
-	nnoremap <buffer> <F3> i<CR><ESC>i-<ESC>44.A<CR><C-R>=strftime("%c")<CR><ESC>kyyjpoTITLE:
+	nnoremap <buffer> <F3> o<ESC>o<ESC>i-<ESC>44.o<C-R>=strftime("%c")<CR><ESC>kyyjpoTITLE:
 	inoremap *shrug* ¯\_ツ_/¯
 endfunction
 
@@ -127,12 +127,15 @@ nnoremap <F5> :%!python -m json.tool<CR>
 nnoremap <F4> :%!xmllint --format -<CR> 
 nnoremap <C-[> <C-t>
 
-" enter key to insert new line in normal mode
-nnoremap <CR> o<ESC>
-
 nnoremap <leader>n :bNext<CR>
 nnoremap <leader>m :bprevious<CR>
 
+" quit window
+nnoremap <leader>q :q<CR>
+
+" }}}
+" {{{ Terminal Mode
+tnoremap jk <C-\><C-n>
 " }}}
 " Folding {{{
 set foldenable
@@ -165,12 +168,16 @@ augroup filetype_go
 	autocmd FileType go nnoremap <buffer> <localleader>i <C-i>
 	autocmd FileType go set foldlevel=2
 	autocmd FileType go nnoremap <buffer> <F3> :GoRun<CR>
-augroup END
+augroup end
 augroup encrypted_dia
 	autocmd!
 	autocmd FileReadPre,BufReadPre *.dia.gpg call DecryptFilePre()
 	autocmd FileReadPost,BufReadPost *.dia.gpg call DecryptFilePost()
 	autocmd FileWritePre,BufWritePre *.dia.gpg call EncryptFilePre()
 	autocmd FileWritePost,BufWritePost *.dia.gpg call EncryptFilePost()
+augroup end
+augroup filetype_rust
+	au!
+	autocmd BufWritePre,FileWritePre *.rs :%!rustfmt
 augroup end
 " }}} vim:foldmethod=marker:foldlevel=0

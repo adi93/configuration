@@ -44,6 +44,12 @@ call plug#begin('~/.config/nvim/plugged')
 	""" ultisnips
 	Plug 'SirVer/ultisnips'
 
+	""" rust
+	Plug 'rust-lang/rust.vim'
+
+	""" For note taking
+	Plug 'vimwiki/vimwiki', { 'branch': 'dev' }
+
     call plug#end()
 "}}}
 " Plugins Configuration {{{
@@ -73,5 +79,16 @@ call plug#begin('~/.config/nvim/plugged')
 
 	" close preview when leaving insert mode
 	autocmd InsertLeave * if pumvisible() == 0 | pclose | endif
+
+	""" vimwiki
+    let wiki_1 = {}
+    let wiki_1.path = '~/Private/notes/'
+    let wiki_1.path_html = '~/Private/notes_html/'
+    let wiki_1.nested_syntaxes = {'python': 'python', 'c++': 'cpp'}
+    let wiki_1.index = 'main'
+	let wiki_1.template_path = '~/Private/notes/templates/'
+
+    let g:vimwiki_list = [wiki_1]
+<
 	
 " vim:foldmethod=marker:foldlevel=0
