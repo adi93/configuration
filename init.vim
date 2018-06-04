@@ -1,6 +1,5 @@
 " Syntax{{{
 set modelines=1
-set relativenumber "This will be folded
 set number
 set backspace=indent,eol,start
 set pastetoggle=<F3>
@@ -99,6 +98,7 @@ set conceallevel=2
 hi MyItalics gui=italic cterm=italic term=italic ctermfg=Blue
 hi SpellBad ctermbg=0 ctermfg=3
 hi MatchParen term=reverse ctermbg=1 guibg=DarkCyan
+ highlight Conceal ctermfg=255 ctermbg=0
 "}}}
 " Mapleader {{{
 nnoremap <SPACE> <Nop>
@@ -179,5 +179,10 @@ augroup end
 augroup filetype_rust
 	au!
 	autocmd BufWritePre,FileWritePre *.rs :%!rustfmt
+augroup end
+augroup filetyp wiki
+	au!
+	autocmd!
+	vmap 4 S$
 augroup end
 " }}} vim:foldmethod=marker:foldlevel=0

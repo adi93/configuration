@@ -60,14 +60,15 @@ call plug#begin('~/.config/nvim/plugged')
 	let g:deoplete#enable_at_startup = 1
 
 	" Use tab in autocomplete
-	inoremap <silent><expr> <TAB>
-				\ pumvisible() ? "\<C-n>" :
-				\ <SID>check_back_space() ? "\<TAB>" :
-				\ deoplete#mappings#manual_complete()
 	function! s:check_back_space() abort "{{{
 		let col = col('.') - 1
 		return !col || getline('.')[col - 1]  =~ '\s'
 	endfunction"}}}
+
+	inoremap <silent><expr> <TAB>
+				\ pumvisible() ? "\<C-n>" :
+				\ <SID>check_back_space() ? "\<TAB>" :
+				\ deoplete#mappings#manual_complete()
 
 	let g:go_disable_autoinstall = 0
 
@@ -83,12 +84,17 @@ call plug#begin('~/.config/nvim/plugged')
 	""" vimwiki
     let wiki_1 = {}
     let wiki_1.path = '~/Private/notes/'
-    let wiki_1.path_html = '~/Private/notes_html/'
+    let wiki_1.path_html = '~/Private/notes/html/'
     let wiki_1.nested_syntaxes = {'python': 'python', 'c++': 'cpp'}
     let wiki_1.index = 'main'
 	let wiki_1.template_path = '~/Private/notes/templates/'
+    let wiki_1.template_default = 'default'
+    let wiki_1.template_ext= '.html'
+
 
     let g:vimwiki_list = [wiki_1]
-<
+	
+	" vim surround
+	let g:surround_36 = "$\r$ "
 	
 " vim:foldmethod=marker:foldlevel=0
