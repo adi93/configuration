@@ -46,10 +46,10 @@ call plug#begin('~/.config/nvim/plugged')
 
 	""" rust
 	Plug 'rust-lang/rust.vim'
+	Plug 'racer-rust/vim-racer'
 
 	""" For note taking
 	Plug 'vimwiki/vimwiki', { 'branch': 'dev' }
-
     call plug#end()
 "}}}
 " Plugins Configuration {{{
