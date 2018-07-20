@@ -74,6 +74,28 @@ function! BufSel(pattern)
 		echo "No matching buffers"
 	endif
 endfunction
+function! Comment() 
+	" iterate over lines, if comment, than insert comment
+	let commentChar = "/"
+	let s=line("'<")
+	let e=line("'>")
+	let index = s
+	while index <= e
+		call cursor(index,1)
+		:normal ^
+		let currentChar = strcharpart(getline('.')[col('.') - 1:], 0, 1)		
+		if currentChar == ""
+		elseif currentChar == commentChar
+			" uncomment
+			:.s:^\(\s*\)//:\1:
+		else
+			"comment
+			:.s:^://:
+		endif
+		let index = index + 1
+	endwhile
+endfunction
+
 " }}}
 " Spaces and tabs {{{
 set tabstop=4
@@ -118,9 +140,8 @@ nnoremap <UP> <C-W>k
 nnoremap <DOWN> <C-W>j
 
 " Cut and paste
-nnoremap <C-C> "+yy
 vnoremap <C-C> "+y
-nnoremap <C-P> "+p
+nnoremap <C-V><C-V> "+p
 
 " json format
 nnoremap <F5> :%!python -m json.tool<CR> 
@@ -136,6 +157,7 @@ nnoremap <leader>q :q<CR>
 " }}}
 " {{{ Terminal Mode
 tnoremap jk <C-\><C-n>
+nnoremap <leader>z :new<CR>:terminal<CR>asource ~/.bash_profile<CR>clear<CR>
 " }}}
 " Folding {{{
 set foldenable
@@ -168,6 +190,10 @@ augroup filetype_go
 	autocmd FileType go nnoremap <buffer> <localleader>i <C-i>
 	autocmd FileType go set foldlevel=2
 	autocmd FileType go nnoremap <buffer> <F3> :GoRun<CR>
+	autocmd FileType go nnoremap <buffer> <F12> :TagbarToggle<CR>
+	autocmd FileType go call neomake#configure#automake('nrwi', 500)
+	autocmd FileType go nnoremap GA :GoAlternate<CR>
+	autocmd FileType go vnoremap <C-A> <ESC>:call Comment()<CR>'<
 augroup end
 augroup encrypted_dia
 	autocmd!
@@ -184,5 +210,7 @@ augroup filetyp wiki
 	au!
 	autocmd!
 	vmap 4 S$
+	let @o='F)2lv$hyi[[#A|pa]]Go=== pa ===o[[#Table of contents:|Back to TOC]]<br/>'
 augroup end
+augroup wi
 " }}} vim:foldmethod=marker:foldlevel=0

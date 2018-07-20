@@ -21,8 +21,8 @@ call plug#begin('~/.config/nvim/plugged')
 	""" Gen stuff
 	Plug 'tpope/vim-surround' "quotes and stuff
 	Plug 'beloglazov/vim-online-thesaurus' "Thesaurus
+	Plug 'szw/vim-dict' " Dictionart
 	
-	Plug 'tpope/vim-dispatch' "Asynch execution
 	Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' } "Autocomplete
 	
 	""" C plugins
@@ -39,10 +39,10 @@ call plug#begin('~/.config/nvim/plugged')
 	Plug 'chrisbra/csv.vim'
 
 	""" Markdown
-	Plug 'kurocode25/mdforvim/'
+	" Plug 'kurocode25/mdforvim/'
 
 	""" ultisnips
-	Plug 'SirVer/ultisnips'
+	" Plug 'SirVer/ultisnips'
 
 	""" rust
 	Plug 'rust-lang/rust.vim'
@@ -50,6 +50,12 @@ call plug#begin('~/.config/nvim/plugged')
 
 	""" For note taking
 	Plug 'vimwiki/vimwiki', { 'branch': 'dev' }
+
+	""" For async linting
+	Plug 'neomake/neomake'
+
+	""" For file structure
+	Plug 'majutsushi/tagbar'
     call plug#end()
 "}}}
 " Plugins Configuration {{{
@@ -94,7 +100,7 @@ call plug#begin('~/.config/nvim/plugged')
 
     let g:vimwiki_list = [wiki_1]
 	
-	" vim surround
-	let g:surround_36 = "$\r$ "
+	" vim dictionary
+	nnoremap <leader>D :execute 'Dict ' . shellescape(expand('<cword>'))<CR>
 	
 " vim:foldmethod=marker:foldlevel=0
