@@ -156,6 +156,7 @@ nnoremap <leader>q :q<CR>
 
 " }}}
 " {{{ Terminal Mode
+nnoremap <leader>z :new<CR>:terminal<CR>asource $HOME/.bash_profile<CR>PS1="\h:\W \u$ "<CR>clear<CR>
 tnoremap jk <C-\><C-n>
 nnoremap <leader>z :new<CR>:terminal<CR>asource ~/.bash_profile<CR>clear<CR>
 " }}}
@@ -194,6 +195,7 @@ augroup filetype_go
 	autocmd FileType go call neomake#configure#automake('nrwi', 500)
 	autocmd FileType go nnoremap GA :GoAlternate<CR>
 	autocmd FileType go vnoremap <C-A> <ESC>:call Comment()<CR>'<
+	autocmd BufWritePost *.go normal! zR
 augroup end
 augroup encrypted_dia
 	autocmd!
@@ -213,4 +215,8 @@ augroup filetyp wiki
 	let @o='F)2lv$hyi[[#A|pa]]Go=== pa ===o[[#Table of contents:|Back to TOC]]<br/>'
 augroup end
 augroup wi
+augroup filetype_python
+	au!
+	autocmd FileType python nnoremap <F12> :TagbarToggle<CR>
+augroup end
 " }}} vim:foldmethod=marker:foldlevel=0
