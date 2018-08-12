@@ -133,6 +133,7 @@ nnoremap k gk
 " Highlight the last inserted text
 nnoremap gV `[v`]
 
+nnoremap <C-E> :tabn<CR>
 " Switch windows
 nnoremap <LEFT> <C-W>h
 nnoremap <RIGHT> <C-W>l
@@ -158,7 +159,7 @@ nnoremap <leader>q :q<CR>
 " {{{ Terminal Mode
 nnoremap <leader>z :new<CR>:terminal<CR>asource $HOME/.bash_profile<CR>PS1="\h:\W \u$ "<CR>clear<CR>
 tnoremap jk <C-\><C-n>
-nnoremap <leader>z :new<CR>:terminal<CR>asource ~/.bash_profile<CR>clear<CR>
+tnoremap <C-E> <C-\><C-n>:tabn<CR>
 " }}}
 " Folding {{{
 set foldenable
@@ -212,7 +213,7 @@ augroup filetyp wiki
 	au!
 	autocmd!
 	vmap 4 S$
-	let @o='F)2lv$hyi[[#A|pa]]Go=== pa ===o[[#Table of contents:|Back to TOC]]<br/>'
+	let @o='F)2lv$hyi[[#jkA|jkpa]]jkGo=== jkpa ===jko[[#Table of contents:|Back to TOC]]jkojko'
 augroup end
 augroup wi
 augroup filetype_python
@@ -220,3 +221,4 @@ augroup filetype_python
 	autocmd FileType python nnoremap <F12> :TagbarToggle<CR>
 augroup end
 " }}} vim:foldmethod=marker:foldlevel=0
+

@@ -38,7 +38,7 @@ call plug#begin('~/.config/nvim/plugged')
 	Plug 'chrisbra/csv.vim'
 
 	""" ultisnips
-	" Plug 'SirVer/ultisnips'
+	Plug 'SirVer/ultisnips'
 
 	""" rust
 	Plug 'rust-lang/rust.vim'
@@ -73,11 +73,6 @@ call plug#begin('~/.config/nvim/plugged')
 		return !col || getline('.')[col - 1]  =~ '\s'
 	endfunction"}}}
 
-	inoremap <silent><expr> <TAB>
-				\ pumvisible() ? "\<C-n>" :
-				\ <SID>check_back_space() ? "\<TAB>" :
-				\ deoplete#mappings#manual_complete()
-
 	let g:go_disable_autoinstall = 0
 
 	" Highlight
@@ -104,5 +99,11 @@ call plug#begin('~/.config/nvim/plugged')
 	
 	" vim dictionary
 	nnoremap <leader>D :execute 'Dict ' . shellescape(expand('<cword>'))<CR>
+	if exists("g:ctrlp_user_command")
+	  unlet g:ctrlp_user_command
+	endif
+	let g:ctrlp_max_depth = 40
+	let g:ctrlp_max_files=0 
+	set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.class,*/target/*,*/test/*
 	
 " vim:foldmethod=marker:foldlevel=0
