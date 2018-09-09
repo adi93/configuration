@@ -29,7 +29,7 @@ call plug#begin('~/.config/nvim/plugged')
 	" Plug 'ludovicchabant/vim-gutentags' " Ctags
 
 	""" vim-go
-	Plug 'fatih/vim-go', { 'do' : ':GoInstallBinaries' }
+	Plug 'fatih/vim-go', { 'do' : ':GoUpdateBinaries' }
 
 	""" fuzzy find files
 	Plug 'ctrlpvim/ctrlp.vim'
@@ -58,6 +58,8 @@ call plug#begin('~/.config/nvim/plugged')
 
 	""" fugitive, for git
 	Plug 'tpope/vim-fugitive'
+
+	Plug 'adi93/go-test'
     call plug#end()
 "}}}
 " Plugins Configuration {{{

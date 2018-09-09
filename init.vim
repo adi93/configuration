@@ -28,7 +28,7 @@ function! DecryptFilePre()
 	set spell
 	set scrolloff=16
 	let g:deoplete#disable_auto_complete=1
-	nnoremap <buffer> <F3> o<ESC>o<ESC>i-<ESC>44.o<C-R>=strftime("%c")<CR><ESC>kyyjpoTITLE:
+	nnoremap <buffer> <F3> o<ESC>o<ESC>i-<ESC>44.o<C-R>=strftime("%a %d %b %Y %H:%M:%S %p %Z")<CR><ESC>kyyjpoTITLE:
 	inoremap *shrug* ¯\_ツ_/¯
 endfunction
 
@@ -147,6 +147,7 @@ nnoremap <C-V><C-V> "+p
 " json format
 nnoremap <F5> :%!python -m json.tool<CR> 
 nnoremap <F4> :%!xmllint --format -<CR> 
+nnoremap <F6> :tabn<CR> 
 nnoremap <C-[> <C-t>
 
 nnoremap <leader>n :bNext<CR>
@@ -155,9 +156,11 @@ nnoremap <leader>m :bprevious<CR>
 " quit window
 nnoremap <leader>q :q<CR>
 
+"turn off highlighting
+nnoremap <leader>/ :set hlsearch!<CR>
 " }}}
 " {{{ Terminal Mode
-nnoremap <leader>z :new<CR>:terminal<CR>asource $HOME/.bash_profile<CR>PS1="\h:\W \u$ "<CR>clear<CR>
+nnoremap <leader>z :new<CR>:terminal<CR>asource $HOME/.bash_profile<CR>PS1="\h:\W \u$ "<CR>source ~/python/neovim/bin/activate<CR>clear<CR>
 tnoremap jk <C-\><C-n>
 tnoremap <C-E> <C-\><C-n>:tabn<CR>
 " }}}
@@ -169,7 +172,6 @@ set foldmethod=indent
 " }}}
 " Insert Mode mappings {{{
 inoremap jk <ESC>
-inoremap <F2> ------------------------<C-M><C-R>=strftime('%c')<C-M><C-M>------------------------<C-M>
 
 " }}}
 " Plugins{{{
@@ -221,4 +223,4 @@ augroup filetype_python
 	autocmd FileType python nnoremap <F12> :TagbarToggle<CR>
 augroup end
 " }}} vim:foldmethod=marker:foldlevel=0
-
+let g:python3_host_prog = '/Users/aditya/python/neovim/bin/python'
