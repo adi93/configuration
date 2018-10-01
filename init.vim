@@ -1,7 +1,7 @@
 " Syntax{{{
 set modelines=1
-set number
 set backspace=indent,eol,start
+set number
 set pastetoggle=<F3>
 set scrolloff=10
 syntax enable
@@ -95,7 +95,16 @@ function! Comment()
 		let index = index + 1
 	endwhile
 endfunction
-
+function! InsertTabWrapper(direction)
+    let col = col('.') - 1
+    if !col || getline('.')[col - 1] !~ '\k'
+        return "\<tab>"
+    elseif "backward" == a:direction
+        return "\<c-p>"
+    else
+        return "\<c-n>"
+    endif
+endfunction
 " }}}
 " Spaces and tabs {{{
 set tabstop=4
@@ -135,13 +144,15 @@ nnoremap gV `[v`]
 
 nnoremap <C-E> :tabn<CR>
 " Switch windows
-nnoremap <LEFT> <C-W>h
-nnoremap <RIGHT> <C-W>l
-nnoremap <UP> <C-W>k
-nnoremap <DOWN> <C-W>j
+nnoremap <C-h> <C-W>h
+nnoremap <C-l> <C-W>l
+nnoremap <C-k> <C-W>k
+nnoremap <C-j> <C-W>j
 
 " Cut and paste
 vnoremap <C-C> "+y
+vnoremap < <gv
+vnoremap > >gv
 nnoremap <C-V><C-V> "+p
 
 " json format
@@ -184,6 +195,7 @@ source ~/.config/nvim/cscope.vim
 " }}}
 " Autocommands {{{
 autocmd FileType cpp set keywordprg=:term\ cppman
+autocmd! BufWritePost ~/.config/nvim/init.vim source %
 augroup filetype_go
 	au!
 	let g:go_term_mode = "10split"
@@ -192,7 +204,7 @@ augroup filetype_go
 	autocmd FileType go nnoremap <buffer> <localleader>b :GoDoc<CR>
 	autocmd FileType go nnoremap <buffer> <localleader>o <C-o>
 	autocmd FileType go nnoremap <buffer> <localleader>i <C-i>
-	autocmd FileType go set foldlevel=2
+	autocmd FileType go set foldlevel=5
 	autocmd FileType go nnoremap <buffer> <F3> :GoRun<CR>
 	autocmd FileType go nnoremap <buffer> <F12> :TagbarToggle<CR>
 	autocmd FileType go call neomake#configure#automake('nrwi', 500)
@@ -217,10 +229,25 @@ augroup filetyp wiki
 	vmap 4 S$
 	let @o='F)2lv$hyi[[#jkA|jkpa]]jkGo=== jkpa ===jko[[#Table of contents:|Back to TOC]]jkojko'
 augroup end
-augroup wi
+augroup filetype_java
+	au!
+	autocmd FileType java nnoremap <F12> :TagbarToggle<CR>
+	set sidescrolloff=20
+	set nowrap
+augroup end
 augroup filetype_python
 	au!
 	autocmd FileType python nnoremap <F12> :TagbarToggle<CR>
+	autocmd FileType python map <leader>g :RopeGotoDefinition()<CR>
+	autocmd FileType python let ropevim_enable_shortcuts = 1
+	autocmd FileType python let g:pymode_rope_goto_def_newwin = "vnew"
+	autocmd FileType python let g:pymode_rope_extended_complete = 1
+	autocmd FileType python let g:pymode_breakpoint = 0
+	autocmd FileType python let g:pymode_syntax = 1
+	autocmd FileType python let g:pymode_syntax_builtin_objs = 0
+	autocmd FileType python let g:pymode_syntax_builtin_funcs = 0
+	inoremap <tab> <c-r>=InsertTabWrapper ("forward")<cr>
+	inoremap <s-tab> <c-r>=InsertTabWrapper ("backward")<cr>
 augroup end
 " }}} vim:foldmethod=marker:foldlevel=0
 let g:python3_host_prog = '/Users/aditya/python/neovim/bin/python'

@@ -34,15 +34,12 @@ call plug#begin('~/.config/nvim/plugged')
 	""" fuzzy find files
 	Plug 'ctrlpvim/ctrlp.vim'
 
-	""" csv files
-	Plug 'chrisbra/csv.vim'
-
 	""" ultisnips
 	Plug 'SirVer/ultisnips'
 
 	""" rust
-	Plug 'rust-lang/rust.vim'
-	Plug 'racer-rust/vim-racer'
+	" Plug 'rust-lang/rust.vim'
+	" Plug 'racer-rust/vim-racer'
 
 	""" For note taking
 	Plug 'vimwiki/vimwiki', { 'branch': 'dev' }
@@ -59,8 +56,17 @@ call plug#begin('~/.config/nvim/plugged')
 	""" fugitive, for git
 	Plug 'tpope/vim-fugitive'
 
+	Plug 'python-mode/python-mode', { 'branch': 'develop' }
+
+	Plug 'jremmen/vim-ripgrep'
 	Plug 'adi93/go-test'
+
+	Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+	Plug 'junegunn/fzf.vim'
+
+	Plug 'airblade/vim-gitgutter'
     call plug#end()
+
 "}}}
 " Plugins Configuration {{{
 	"NerdTree
@@ -108,4 +114,4 @@ call plug#begin('~/.config/nvim/plugged')
 	let g:ctrlp_max_files=0 
 	set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.class,*/target/*,*/test/*
 	
-" vim:foldmethod=marker:foldlevel=0
+" vim:foldmethod=marker:foldlevel=1
