@@ -32,7 +32,7 @@ call plug#begin('~/.config/nvim/plugged')
 	Plug 'fatih/vim-go', { 'do' : ':GoUpdateBinaries' }
 
 	""" fuzzy find files
-	Plug 'ctrlpvim/ctrlp.vim'
+	"Plug 'ctrlpvim/ctrlp.vim'
 
 	""" ultisnips
 	Plug 'SirVer/ultisnips'

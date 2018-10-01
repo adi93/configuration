@@ -250,4 +250,4 @@ augroup filetype_python
 	inoremap <s-tab> <c-r>=InsertTabWrapper ("backward")<cr>
 augroup end
 " }}} vim:foldmethod=marker:foldlevel=0
-let g:python3_host_prog = '/Users/aditya/python/neovim/bin/python'
+let g:python3_host_prog = '/home/aditya/python/neovim/bin/python'
