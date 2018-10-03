@@ -65,6 +65,9 @@ call plug#begin('~/.config/nvim/plugged')
 	Plug 'junegunn/fzf.vim'
 
 	Plug 'airblade/vim-gitgutter'
+
+	" tags
+	Plug 'ludovicchabant/vim-gutentags'
     call plug#end()
 
 "}}}

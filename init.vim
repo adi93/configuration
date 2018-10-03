@@ -173,6 +173,10 @@ nnoremap <leader>/ :set hlsearch!<CR>
 " {{{ Terminal Mode
 nnoremap <leader>z :new<CR>:terminal<CR>asource $HOME/.bash_profile<CR>PS1="\h:\W \u$ "<CR>source ~/python/neovim/bin/activate<CR>clear<CR>
 tnoremap jk <C-\><C-n>
+tnoremap <C-j> <C-\><C-n><C-W><C-j>
+tnoremap <C-h> <C-\><C-n><C-W><C-h>
+tnoremap <C-k> <C-\><C-n><C-W><C-k>
+tnoremap <C-l> <C-\><C-n><C-W><C-l>
 tnoremap <C-E> <C-\><C-n>:tabn<CR>
 " }}}
 " Folding {{{
@@ -189,7 +193,6 @@ inoremap jk <ESC>
 source ~/.config/nvim/plugin.vim
 " }}}
 " Cscope {{{
-source ~/.config/nvim/cscope.vim
 " }}}
 " Unicode aliases {{{
 " }}}
@@ -227,12 +230,13 @@ augroup filetyp wiki
 	au!
 	autocmd!
 	vmap 4 S$
-	let @o='F)2lv$hyi[[#jkA|jkpa]]jkGo=== jkpa ===jko[[#Table of contents:|Back to TOC]]jkojko'
+	let @o='F)2lv$hyi[[#jkA|jkpa]]jkGo== jkpa ==jko[[#Table of contents:|Back to TOC]]jkojko'
+	set wrap
 augroup end
 augroup filetype_java
 	au!
 	autocmd FileType java nnoremap <F12> :TagbarToggle<CR>
-	set sidescrolloff=20
+	autocmd FileType java set sidescrolloff=20
 	set nowrap
 augroup end
 augroup filetype_python
@@ -249,5 +253,9 @@ augroup filetype_python
 	inoremap <tab> <c-r>=InsertTabWrapper ("forward")<cr>
 	inoremap <s-tab> <c-r>=InsertTabWrapper ("backward")<cr>
 augroup end
+augroup filetype_c
+	au!
+	autocmd BufEnter *.cpp,*.h,*.c set tags=./tags;~
+	autocmd BufEnter *.cpp,*.h,*.c nnoremap <F12> :TagbarToggle<CR>
 " }}} vim:foldmethod=marker:foldlevel=0
 let g:python3_host_prog = '/home/aditya/python/neovim/bin/python'
