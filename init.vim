@@ -26,7 +26,6 @@ function! DecryptFilePre()
 	set nowritebackup
 	set nobackup
 	set bin
-	set spell
 	set scrolloff=16
 	let g:deoplete#disable_auto_complete=1
 	nnoremap <buffer> <F3> o<ESC>o<ESC>i-<ESC>44.o<C-R>=strftime("%a %d %b %Y %H:%M:%S %p %Z")<CR><ESC>kyyjpoTITLE:
@@ -365,7 +364,7 @@ augroup filetyp wiki
 	au!
 	autocmd!
 	autocmd BufEnter *.wiki vmap 4 S$
-	autocmd BufEnter *.wiki let @o='F)2lv$hyi[[#jkA|jkpa]]jkGo== jkpa ==jko[[#Table of contents:|Back to TOC]]jkojko'
+	autocmd BufEnter *.wiki let @o='F)2lv$hyi[[#jkA|jkpa]]jkGojk"_d^i== jkpa ==jko[[#Table of contents:|Back to TOC]]jkojko'
 	autocmd BufEnter *.wiki set wrap
 augroup end
 augroup filetype_java
