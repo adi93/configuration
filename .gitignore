@@ -4,3 +4,4 @@ tags
 spell/*
 plugin/
 templates/
+python_host.vim

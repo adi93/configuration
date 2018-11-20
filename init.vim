@@ -390,4 +390,4 @@ augroup filetype_c
 	autocmd BufEnter *.cpp,*.h,*.c set tags=./tags;~
 	autocmd BufEnter *.cpp,*.h,*.c nnoremap <F12> :TagbarToggle<CR>
 " }}} vim:foldmethod=marker:foldlevel=0
-let g:python3_host_prog = '/Users/aditya/python/neovim/bin/python'
+source ~/.config/nvim/python_host.vim
