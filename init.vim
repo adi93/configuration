@@ -27,7 +27,7 @@ function! DecryptFilePre()
 	set nobackup
 	set bin
 	set scrolloff=16
-	let g:deoplete#disable_auto_complete=1
+	" let g:deoplete#disable_auto_complete=1
 	nnoremap <buffer> <F3> o<ESC>o<ESC>i-<ESC>44.o<C-R>=strftime("%a %d %b %Y %H:%M:%S %p %Z")<CR><ESC>kyyjpoTITLE:
 	inoremap *shrug* ¯\_ツ_/¯
 endfunction
@@ -225,20 +225,11 @@ call plug#begin('~/.config/nvim/plugged')
 	Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' } "Autocomplete
 
 	""" C plugins
-	" Plug 'vim-scripts/c.vim' "IDE
 	Plug 'ludovicchabant/vim-gutentags' " Ctags
 
-	""" vim-go
-	Plug 'fatih/vim-go', { 'do' : ':GoUpdateBinaries' }
+	"""vim-go
+    Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 
-	""" fuzzy find files
-	"Plug 'ctrlpvim/ctrlp.vim'
-
-
-	""" rust
-	Plug 'rust-lang/rust.vim'
-	Plug 'racer-rust/vim-racer'
-	"
 	""" For note taking
 	Plug 'vimwiki/vimwiki', { 'branch': 'dev' }
 
@@ -260,7 +251,7 @@ call plug#begin('~/.config/nvim/plugged')
 	Plug 'python-mode/python-mode', { 'branch': 'develop' }
 
 	Plug 'jremmen/vim-ripgrep'
-	" Plug 'adi93/go-test'
+	Plug 'adi93/go-test'
 
 	Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 	Plug 'junegunn/fzf.vim'
@@ -268,6 +259,9 @@ call plug#begin('~/.config/nvim/plugged')
 	Plug 'airblade/vim-gitgutter'
 
 	Plug 'SirVer/ultisnips'
+
+	"Language server
+	Plug 'natebosch/vim-lsc'
 	" tags
     call plug#end()
 
@@ -279,9 +273,6 @@ call plug#begin('~/.config/nvim/plugged')
 	" Deoplete
 	let g:deoplete#enable_at_startup = 1
 	call deoplete#custom#source('ultisnips', 'matchers', ['matcher_fuzzy'])
-
-	" vim go
-	let g:go_disable_autoinstall = 0
 
 	" Highlight
 	let g:go_highlight_functions = 1
@@ -318,7 +309,11 @@ call plug#begin('~/.config/nvim/plugged')
 
 	" Ulti snips
 	let g:UltiSnipsExpandTrigger="<tab>"
-	 let g:UltiSnipsSnippetDirectories=["custom_snippets"]
+	let g:UltiSnipsSnippetDirectories=["custom_snippets"]
+
+	" Language server
+	let g:lsc_server_commands = {'go': 'bingo'}
+	let g:lsc_auto_map = v:true " Use defaults
 " vim:foldmethod=marker:foldlevel=1
 " }}}
 " Cscope {{{
