@@ -28,13 +28,14 @@ function! DecryptFilePre()
 	set bin
 	set scrolloff=16
 	" let g:deoplete#disable_auto_complete=1
-	nnoremap <buffer> <F3> o<ESC>o<ESC>i-<ESC>44.o<C-R>=strftime("%a %d %b %Y %H:%M:%S %p %Z")<CR><ESC>kyyjpoTITLE:
+	nnoremap <buffer> <F3> o<ESC>o<ESC>i-<ESC>44.o<C-R>=strftime("%a %d %b %Y %l:%M:%S %p %Z")<CR><ESC>kyyjpoTITLE:
 	inoremap *shrug* ¯\_ツ_/¯
 endfunction
 
 function! DecryptFilePost()
 	:%!gpg -d 2>/dev/null
 	set nobin
+	set filetype=markdown
 endfunction
 
 function! EncryptFilePre()
@@ -45,6 +46,7 @@ endfunction
 function! EncryptFilePost()
 	silent u
 	set nobin
+	set filetype=markdown
 endfunction
 
 function! BufSel(pattern)
@@ -237,7 +239,7 @@ call plug#begin('~/.config/nvim/plugged')
 	Plug 'SirVer/ultisnips'
 
 	""" For async linting
-	Plug 'neomake/neomake'
+	" Plug 'neomake/neomake'
 
 	""" For Tagbar
 	Plug 'majutsushi/tagbar'
@@ -263,6 +265,11 @@ call plug#begin('~/.config/nvim/plugged')
 	"Language server
 	Plug 'natebosch/vim-lsc'
 	" tags
+	
+	" Flow diagrams
+	Plug 'tyru/open-browser.vim'
+	Plug 'weirongxu/plantuml-previewer.vim'
+	Plug 'aklt/plantuml-syntax'
     call plug#end()
 
 "}}}
@@ -287,7 +294,7 @@ call plug#begin('~/.config/nvim/plugged')
     let wiki_1 = {}
     let wiki_1.path = '~/Private/notes/'
     let wiki_1.path_html = '~/Private/notes/html/'
-    let wiki_1.nested_syntaxes = {'python': 'python', 'c++': 'cpp'}
+    let wiki_1.nested_syntaxes = {'python': 'python', 'c++': 'cpp', 'c': 'c'}
     let wiki_1.index = 'main'
 	let wiki_1.template_path = '~/Private/notes/templates/'
     let wiki_1.template_default = 'default'
@@ -324,6 +331,11 @@ call plug#begin('~/.config/nvim/plugged')
 autocmd FileType cpp set keywordprg=:term\ cppman
 autocmd! BufWritePost ~/.config/nvim/init.vim source %
 autocmd! BufWritePost ~/.config/nvim/plugin.vim source ~/.config/nvim/init.vim
+augroup filetype_puml
+	au!
+	autocmd FileType plantuml nnoremap <leader>whh :PlantumlOpen<CR>
+	autocmd FileType plantuml nnoremap <leader>wh :PlantumlSave<CR>
+augroup end
 augroup filetype_go
 	au!
 	let g:go_term_mode = "10split"
@@ -334,13 +346,13 @@ augroup filetype_go
 	autocmd FileType go nnoremap <buffer> <localleader>i <C-i>
 	autocmd FileType go set foldlevel=5
 	autocmd FileType go nnoremap <buffer> <F12> :TagbarToggle<CR>
-	autocmd FileType go call neomake#configure#automake('nrwi', 500)
+	" autocmd FileType go call neomake#configure#automake('nrwi', 500)
 	autocmd FileType go nnoremap GA :GoAlternate<CR>
 	autocmd FileType go vnoremap <C-A> <ESC>:call Comment()<CR>'<
 	autocmd BufWritePost *.go normal! zR
 augroup end
 augroup encrypted_dia
-	autocmd!
+	au!
 	autocmd FileReadPre,BufReadPre *.dia.gpg call DecryptFilePre()
 	autocmd FileReadPost,BufReadPost *.dia.gpg call DecryptFilePost()
 	autocmd FileWritePre,BufWritePre *.dia.gpg call EncryptFilePre()
@@ -355,11 +367,13 @@ augroup filetype_rust
 	au FileType rust nmap gx <Plug>(rust-def-vertical)
 	au FileType rust nmap <leader>gd <Plug>(rust-doc)
 augroup end
-augroup filetyp wiki
+augroup filetype wiki
 	au!
 	autocmd!
 	autocmd BufEnter *.wiki vmap 4 S$
 	autocmd BufEnter *.wiki let @o='F)2lv$hyi[[#jkA|jkpa]]jkGojk"_d^i== jkpa ==jko[[#Table of contents:|Back to TOC]]jkojko'
+	autocmd BufEnter *.wiki let @s="istyle=\"width:600px;\""
+
 	autocmd BufEnter *.wiki set wrap
 augroup end
 augroup filetype_java
