@@ -121,7 +121,6 @@ set linebreak
 set whichwrap=[,]
 " }}}
 " Highlighting {{{
-colorscheme elflord
 set hlsearch
 set wildmenu
 set showmatch
@@ -263,7 +262,7 @@ call plug#begin('~/.config/nvim/plugged')
 	Plug 'SirVer/ultisnips'
 
 	"Language server
-	Plug 'natebosch/vim-lsc'
+	" Plug 'natebosch/vim-lsc'
 	" tags
 	
 	" Flow diagrams
@@ -279,6 +278,8 @@ call plug#begin('~/.config/nvim/plugged')
 
 	" Deoplete
 	let g:deoplete#enable_at_startup = 1
+
+	inoremap <silent><expr> <TAB> pumvisible() ? "\<C-n>" : deoplete#manual_complete()
 	call deoplete#custom#source('ultisnips', 'matchers', ['matcher_fuzzy'])
 
 	" Highlight
@@ -299,6 +300,7 @@ call plug#begin('~/.config/nvim/plugged')
 	let wiki_1.template_path = '~/Private/notes/templates/'
     let wiki_1.template_default = 'default'
     let wiki_1.template_ext= '.html'
+	let wiki_1.css_name = 'prism.css'
     let g:vimwiki_list = [wiki_1]
 	let g:vimwiki_table_mappings = 0
 
@@ -322,6 +324,9 @@ call plug#begin('~/.config/nvim/plugged')
 	let g:lsc_server_commands = {'go': 'bingo'}
 	let g:lsc_auto_map = v:true " Use defaults
 " vim:foldmethod=marker:foldlevel=1
+" }}}
+" {{{ colorscheme
+colorscheme elflord
 " }}}
 " Cscope {{{
 " }}}
