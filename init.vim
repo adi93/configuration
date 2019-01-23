@@ -252,6 +252,7 @@ call plug#begin('~/.config/nvim/plugged')
 
 	Plug 'python-mode/python-mode', { 'branch': 'develop' }
 
+	""" Searching
 	Plug 'jremmen/vim-ripgrep'
 	Plug 'adi93/go-test'
 
