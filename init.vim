@@ -76,7 +76,7 @@ function! BufSel(pattern)
 		echo "No matching buffers"
 	endif
 endfunction
-function! Comment() 
+function! Comment()
 	" iterate over lines, if comment, than insert comment
 	let commentChar = "/"
 	let s=line("'<")
@@ -85,7 +85,7 @@ function! Comment()
 	while index <= e
 		call cursor(index,1)
 		:normal ^
-		let currentChar = strcharpart(getline('.')[col('.') - 1:], 0, 1)		
+		let currentChar = strcharpart(getline('.')[col('.') - 1:], 0, 1)
 		if currentChar == ""
 		elseif currentChar == commentChar
 			" uncomment
@@ -98,19 +98,19 @@ function! Comment()
 	endwhile
 endfunction
 function! MaximizeToggle()
-  if exists("s:maximize_session")
-    exec "source " . s:maximize_session
-    call delete(s:maximize_session)
-    unlet s:maximize_session
-    let &hidden=s:maximize_hidden_save
-    unlet s:maximize_hidden_save
-  else
-    let s:maximize_hidden_save = &hidden
-    let s:maximize_session = tempname()
-    set hidden
-    exec "mksession! " . s:maximize_session
-    only
-  endif
+	if exists("s:maximize_session")
+		exec "source " . s:maximize_session
+		call delete(s:maximize_session)
+		unlet s:maximize_session
+		let &hidden=s:maximize_hidden_save
+		unlet s:maximize_hidden_save
+	else
+		let s:maximize_hidden_save = &hidden
+		let s:maximize_session = tempname()
+		set hidden
+		exec "mksession! " . s:maximize_session
+		only
+	endif
 endfunction
 " }}}
 " Spaces and tabs {{{
@@ -135,7 +135,7 @@ set conceallevel=2
 hi MyItalics gui=italic cterm=italic term=italic ctermfg=Blue
 hi SpellBad ctermbg=0 ctermfg=3
 hi MatchParen term=reverse ctermbg=1 guibg=DarkCyan
- highlight Conceal ctermfg=255 ctermbg=0
+highlight Conceal ctermfg=255 ctermbg=0
 "}}}
 " Mapleader {{{
 nnoremap <SPACE> <Nop>
@@ -162,9 +162,9 @@ vnoremap > >gv
 nnoremap <C-V><C-V> "+p
 
 " json format
-nnoremap <F5> :%!python -m json.tool<CR> 
-nnoremap <F4> :%!xmllint --format -<CR> 
-nnoremap <F6> :tabn<CR> 
+nnoremap <F5> :%!python -m json.tool<CR>
+nnoremap <F4> :%!xmllint --format -<CR>
+nnoremap <F6> :tabn<CR>
 nnoremap <C-[> <C-t>
 
 nnoremap <leader>n :bNext<CR>
@@ -201,26 +201,27 @@ inoremap jk <ESC>
 " }}}
 " Plugins{{{
 if empty(glob('~/.config/nvim/autoload/plug.vim'))
-    silent !curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs
+	silent !curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs
 	\ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-    autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+	autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
 call plug#begin('~/.config/nvim/plugged')
 	function! DoRemote(arg)
-      UpdateRemotePlugins
-    endfunction
+		UpdateRemotePlugins
+	endfunction
+
 	" Table mode
 	Plug 'dhruvasagar/vim-table-mode'
 	let g:table_mode_header_fillchar='='
 
 	" NerdTree
- 	Plug 'scrooloose/nerdtree'
+	Plug 'scrooloose/nerdtree'
 
 	" Gen stuff
 	Plug 'tpope/vim-surround'
 	Plug 'beloglazov/vim-online-thesaurus' "Thesaurus
 	Plug 'szw/vim-dict' " Dictionart
-	
+
 	Plug 'tpope/vim-dispatch' "Asynch execution
 
 	Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' } "Autocomplete
@@ -229,8 +230,9 @@ call plug#begin('~/.config/nvim/plugged')
 	Plug 'ludovicchabant/vim-gutentags' " Ctags
 
 	"""vim-go
-    Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+	Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 
+	Plug 'stamblerre/gocode', { 'rtp': 'nvim', 'do': '~/.config/nvim/plugged/gocode/nvim/symlink.sh' }
 	""" For note taking
 	Plug 'vimwiki/vimwiki', { 'branch': 'dev' }
 
@@ -264,12 +266,12 @@ call plug#begin('~/.config/nvim/plugged')
 	"Language server
 	" Plug 'natebosch/vim-lsc'
 	" tags
-	
+
 	" Flow diagrams
 	Plug 'tyru/open-browser.vim'
 	Plug 'weirongxu/plantuml-previewer.vim'
 	Plug 'aklt/plantuml-syntax'
-    call plug#end()
+	call plug#end()
 
 "}}}
 " Plugins Configuration {{{
@@ -283,37 +285,36 @@ call plug#begin('~/.config/nvim/plugged')
 	call deoplete#custom#source('ultisnips', 'matchers', ['matcher_fuzzy'])
 
 	" Highlight
-	let g:go_highlight_functions = 1
-	let g:go_highlight_methods = 1
-	let g:go_highlight_structs = 1
-	let g:go_highlight_operators = 1
+	" let g:go_highlight_functions = 1
+	" let g:go_highlight_methods = 1
+	" let g:go_highlight_structs = 1
+	" let g:go_highlight_operators = 1
 
 	" close preview when leaving insert mode
 	autocmd InsertLeave * if pumvisible() == 0 | pclose | endif
 
 	""" vimwiki
-    let wiki_1 = {}
-    let wiki_1.path = '~/Private/notes/'
-    let wiki_1.path_html = '~/Private/notes/html/'
-    let wiki_1.nested_syntaxes = {'python': 'python', 'c++': 'cpp', 'c': 'c'}
-    let wiki_1.index = 'main'
+	let wiki_1 = {}
+	let wiki_1.path = '~/Private/notes/'
+	let wiki_1.path_html = '~/Private/notes/html/'
+	let wiki_1.nested_syntaxes = {'python': 'python', 'c++': 'cpp', 'c': 'c'}
+	let wiki_1.index = 'main'
 	let wiki_1.template_path = '~/Private/notes/templates/'
-    let wiki_1.template_default = 'default'
-    let wiki_1.template_ext= '.html'
+	let wiki_1.template_default = 'default'
+	let wiki_1.template_ext= '.html'
 	let wiki_1.css_name = 'prism.css'
-    let g:vimwiki_list = [wiki_1]
+	let g:vimwiki_list = [wiki_1]
 	let g:vimwiki_table_mappings = 0
 
-	
 	" vim dictionary
 	nnoremap <leader>d :execute 'Dict ' . shellescape(expand('<cword>'))<CR>
 	if exists("g:ctrlp_user_command")
-	  unlet g:ctrlp_user_command
+		unlet g:ctrlp_user_command
 	endif
 	let g:ctrlp_max_depth = 40
-	let g:ctrlp_max_files=0 
+	let g:ctrlp_max_files=0
 	set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.class,*/target/*,*/test/*
-	let g:deoplete#sources#rust#racer_binary='/Users/aditya/.cargo/bin/racer'	
+	let g:deoplete#sources#rust#racer_binary='/Users/aditya/.cargo/bin/racer'
 	let g:deoplete#sources#rust#rust_source_path='/Users/aditya/Private/notes/study/rust/rust-source-code/src'
 
 	" Ulti snips
@@ -344,15 +345,17 @@ augroup end
 augroup filetype_go
 	au!
 	let g:go_term_mode = "10split"
-	autocmd FileType go nnoremap <buffer> <F3> :GoRun<CR>
-	autocmd FileType go nnoremap <buffer> <localleader>d :GoDef<CR>
-	autocmd FileType go nnoremap <buffer> <localleader>b :GoDoc<CR>
-	autocmd FileType go nnoremap <buffer> <localleader>o <C-o>
-	autocmd FileType go nnoremap <buffer> <localleader>i <C-i>
+
+	"autocmd FileType go nnoremap <buffer> <F3> :GoRun<CR>
+	"autocmd FileType go nnoremap <buffer> <localleader>d :GoDef<CR>
+	"autocmd FileType go nnoremap <buffer> <localleader>b :GoDoc<CR>
+	"autocmd FileType go nnoremap <buffer> <localleader>o <C-o>
+	"autocmd FileType go nnoremap <buffer> <localleader>i <C-i>
+	"autocmd FileType go nnoremap GA :GoAlternate<CR>
+
 	autocmd FileType go set foldlevel=5
 	autocmd FileType go nnoremap <buffer> <F12> :TagbarToggle<CR>
 	" autocmd FileType go call neomake#configure#automake('nrwi', 500)
-	autocmd FileType go nnoremap GA :GoAlternate<CR>
 	autocmd FileType go vnoremap <C-A> <ESC>:call Comment()<CR>'<
 	autocmd BufWritePost *.go normal! zR
 augroup end
