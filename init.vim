@@ -76,26 +76,14 @@ function! BufSel(pattern)
 		echo "No matching buffers"
 	endif
 endfunction
-function! Comment()
-	" iterate over lines, if comment, than insert comment
-	let commentChar = "/"
-	let s=line("'<")
-	let e=line("'>")
-	let index = s
-	while index <= e
-		call cursor(index,1)
-		:normal ^
-		let currentChar = strcharpart(getline('.')[col('.') - 1:], 0, 1)
-		if currentChar == ""
-		elseif currentChar == commentChar
-			" uncomment
-			:.s:^\(\s*\)//:\1:
-		else
-			"comment
-			:.s:^://:
-		endif
-		let index = index + 1
-	endwhile
+function! ToggleComment(commentPrefix)
+	let initialMatch="^\\s*" . a:commentPrefix . ".*$"
+	if matchstr(getline(line(".")),initialMatch) == ''
+		:let executeString="s:^\\(^\\s*\\):\\1" . a:commentPrefix . " :"
+	else
+		:let executeString="s:\\(^\\s*\\)" . a:commentPrefix . "\\s*:\\1:"
+	endif
+	:execute executeString
 endfunction
 function! MaximizeToggle()
 	if exists("s:maximize_session")
@@ -282,7 +270,6 @@ call plug#begin('~/.config/nvim/plugged')
 	" Deoplete
 	let g:deoplete#enable_at_startup = 1
 
-	inoremap <silent><expr> <TAB> pumvisible() ? "\<C-n>" : deoplete#manual_complete()
 	call deoplete#custom#source('ultisnips', 'matchers', ['matcher_fuzzy'])
 
 	" Highlight
