@@ -85,6 +85,7 @@ function! ToggleComment(commentPrefix)
 	endif
 	:execute executeString
 endfunction
+
 function! MaximizeToggle()
 	if exists("s:maximize_session")
 		exec "source " . s:maximize_session
@@ -260,6 +261,7 @@ call plug#begin('~/.config/nvim/plugged')
 	Plug 'tyru/open-browser.vim'
 	Plug 'weirongxu/plantuml-previewer.vim'
 	Plug 'aklt/plantuml-syntax'
+
 	call plug#end()
 
 "}}}
@@ -344,7 +346,8 @@ augroup filetype_go
 	autocmd FileType go set foldlevel=5
 	autocmd FileType go nnoremap <buffer> <F12> :TagbarToggle<CR>
 	" autocmd FileType go call neomake#configure#automake('nrwi', 500)
-	autocmd FileType go vnoremap <C-A> <ESC>:call Comment()<CR>'<
+	autocmd FileType go vnoremap <C-L> :call ToggleComment("//")<cr>
+	autocmd FileType go nnoremap <C-L> :call ToggleComment("//")<cr>
 	autocmd BufWritePost *.go normal! zR
 augroup end
 augroup encrypted_dia
