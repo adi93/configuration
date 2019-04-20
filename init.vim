@@ -262,6 +262,9 @@ call plug#begin('~/.config/nvim/plugged')
 	Plug 'weirongxu/plantuml-previewer.vim'
 	Plug 'aklt/plantuml-syntax'
 
+	" Tmux navigation
+	Plug 'christoomey/vim-tmux-navigator'
+
 	call plug#end()
 
 "}}}
@@ -346,8 +349,8 @@ augroup filetype_go
 	autocmd FileType go set foldlevel=5
 	autocmd FileType go nnoremap <buffer> <F12> :TagbarToggle<CR>
 	" autocmd FileType go call neomake#configure#automake('nrwi', 500)
-	autocmd FileType go vnoremap <C-L> :call ToggleComment("//")<cr>
-	autocmd FileType go nnoremap <C-L> :call ToggleComment("//")<cr>
+	autocmd FileType go vnoremap <silent> <C-P> :call ToggleComment("//")<cr>
+	autocmd FileType go nnoremap <silent> <C-P> :call ToggleComment("//")<cr>
 	autocmd BufWritePost *.go normal! zR
 augroup end
 augroup encrypted_dia
